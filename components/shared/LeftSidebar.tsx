@@ -8,10 +8,16 @@ import { SignOutButton, SignedIn, useAuth } from "@clerk/nextjs";
 import { sidebarLinks } from "@/constants";
 
 const LeftSidebar = () => {
+  const { signOut } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
   const { userId } = useAuth();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/sign-in");
+  } ;
 
   return (
     <section className='custom-scrollbar leftsidebar'>
@@ -44,7 +50,7 @@ const LeftSidebar = () => {
 
       <div className='mt-10 px-6'>
         <SignedIn>
-          <SignOutButton signOutCallback={() => router.push("/sign-in")}>
+          <button onClick={handleSignOut}>
             <div className='flex cursor-pointer gap-4 p-4'>
               <Image
                 src='/assets/logout.svg'
@@ -55,7 +61,7 @@ const LeftSidebar = () => {
 
               <p className='text-light-2 max-lg:hidden'>Logout</p>
             </div>
-          </SignOutButton>
+          </button>
         </SignedIn>
       </div>
     </section>

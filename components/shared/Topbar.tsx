@@ -1,9 +1,21 @@
-import { OrganizationSwitcher, SignedIn, SignOutButton } from "@clerk/nextjs";
+"use client";
+
+import { OrganizationSwitcher, SignedIn, SignOutButton, useAuth } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function Topbar() {
+
+  const { signOut } = useAuth();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/sign-in");
+  } ;
+
   return (
     <nav className='topbar'>
       <Link href='/' className='flex items-center gap-4'>
@@ -14,7 +26,7 @@ function Topbar() {
       <div className='flex items-center gap-1'>
         <div className='block md:hidden'>
           <SignedIn>
-            <SignOutButton>
+            <button onClick={handleSignOut}>
               <div className='flex cursor-pointer'>
                 <Image
                   src='/assets/logout.svg'
@@ -23,7 +35,7 @@ function Topbar() {
                   height={24}
                 />
               </div>
-            </SignOutButton>
+            </button>
           </SignedIn>
         </div>
 
