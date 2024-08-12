@@ -33,8 +33,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'utfs.io',
-        // Optional: specify a pathname pattern if needed
-        // pathname: '/f/**',
       },
     ],
   },
